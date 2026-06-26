@@ -90,7 +90,7 @@ class _ProductCardState extends State<ProductCard> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Container(
+                        SizedBox(
                           width: MediaQuery.of(context).size.width / 1.5,
                           child: Text(
                             widget.product.title,

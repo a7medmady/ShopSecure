@@ -4,7 +4,6 @@ import 'package:e_commerce/core/home/model/categoryModel.dart';
 import 'package:e_commerce/core/home/model/productModel.dart';
 import 'package:e_commerce/core/home/screens/cart.dart';
 import 'package:e_commerce/core/home/screens/home.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -40,7 +39,7 @@ class HomeCubit extends Cubit<HomeState> {
   Future products(String category) async {
     emit(HomeLoading());
     try {
-      var response;
+      Response<dynamic> response;
       if (category == 'All') {
         response = await dio.get('https://dummyjson.com/products');
       } else {
