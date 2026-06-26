@@ -72,10 +72,11 @@ class _ProductCardState extends State<ProductCard> {
                       ),
                       child: Stack(
                         children: [
-                          Positioned(top: 20, right: 20,
-                           child: Love(
-                             product: widget.product,
-                           )),
+                          Positioned(
+                            top: 20,
+                            right: 20,
+                            child: Love(product: widget.product),
+                          ),
                           CachedNetworkImage(
                             imageUrl: widget.product.image,
                             fit: BoxFit.fill,
@@ -181,9 +182,22 @@ class _ProductCardState extends State<ProductCard> {
 
                     AddCartButton(
                       onTap: () {
+                        if (!cubit.listOfCart.contains(widget.product)) {
+                          cubit.customSnackBar(
+                            context,
+                            '${widget.product.title} added to Cart Successfully',
+                            Colors.green,
+                          );
+                        } else {
+                          cubit.customSnackBar(
+                            context,
+                            '${widget.product.title} already added to Cart',
+                            Colors.red,
+                          );
+                        }
                         cubit.addCart(widget.product);
                       },
-                      ),
+                    ),
                   ],
                 ),
               ),

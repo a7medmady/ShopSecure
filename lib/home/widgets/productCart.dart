@@ -70,7 +70,7 @@ class _ProductCartState extends State<ProductCart> {
 
                       IconButton(
                         onPressed: widget.onDelete,
-                        icon: const Icon(Icons.delete, color: Colors.black),
+                        icon: const Icon(Icons.delete, color: Colors.red),
                       ),
                     ],
                   ),
@@ -107,7 +107,7 @@ class _ProductCartState extends State<ProductCart> {
                         ),
                       ),
 
-                      Quantity(product: p,),
+                      Quantity(product: p),
                     ],
                   ),
                 ],

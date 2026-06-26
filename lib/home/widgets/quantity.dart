@@ -31,14 +31,14 @@ class _QuantityState extends State<Quantity> {
               children: [
                 IconButton(
                   onPressed: () {
-                    cubit.increaseQuantity(widget.product);
+                    cubit.increaseQuantity(widget.product, context);
                   },
                   icon: Icon(Icons.add),
                 ),
                 Text(widget.product.quantity.toString()),
                 IconButton(
                   onPressed: () {
-                    cubit.decreaseQuantity(widget.product);
+                    cubit.decreaseQuantity(widget.product, context);
                   },
                   icon: Icon(Icons.remove),
                 ),

@@ -4,8 +4,8 @@ import 'package:e_commerce/home/model/categoryModel.dart';
 import 'package:e_commerce/home/model/productModel.dart';
 import 'package:e_commerce/home/screens/cart.dart';
 import 'package:e_commerce/home/screens/home.dart';
-import 'package:e_commerce/home/screens/profile.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeCubit extends Cubit<HomeState> {
@@ -14,7 +14,7 @@ class HomeCubit extends Cubit<HomeState> {
   static HomeCubit get(context) => BlocProvider.of(context);
 
   // Screens
-  List screens = [Home(), Cart(), Profile()];
+  List screens = [Home(), Cart()];
   int currentIndex = 0;
   void changeScreen(int index) {
     currentIndex = index;
@@ -86,19 +86,31 @@ class HomeCubit extends Cubit<HomeState> {
 
   // change quantity
   // 1- Increase
-  void increaseQuantity(ProductModel product) {
+  void increaseQuantity(ProductModel product, BuildContext context) {
     int index = listOfCart.indexOf(product);
     if (listOfCart[index].quantity < 10) {
       listOfCart[index].quantity += 1;
+    } else {
+      customSnackBar(
+        context,
+        'You can not add more than 10 items',
+        Colors.redAccent,
+      );
     }
     emit(CategoryChanged());
   }
 
   // 2- Decrease
-  void decreaseQuantity(ProductModel product) {
+  void decreaseQuantity(ProductModel product, BuildContext context) {
     int index = listOfCart.indexOf(product);
     if (listOfCart[index].quantity > 1) {
       listOfCart[index].quantity -= 1;
+    } else {
+      customSnackBar(
+        context,
+        'You can not order less than 1 item',
+        Colors.redAccent,
+      );
     }
     emit(CategoryChanged());
   }
@@ -134,21 +146,30 @@ class HomeCubit extends Cubit<HomeState> {
     return total;
   }
 
-
   // insert to love
-  List <ProductModel> listOfLove = [];
-  void insertToLove(ProductModel product){
-    if(!listOfLove.contains(product)){
+  List<ProductModel> listOfLove = [];
+  void insertToLove(ProductModel product) {
+    if (!listOfLove.contains(product)) {
       listOfLove.add(product);
     }
     emit(InsertToLove());
   }
 
   // remove from love
-  void removeFromLove(ProductModel product){
+  void removeFromLove(ProductModel product) {
     int index = listOfLove.indexOf(product);
     listOfLove.removeAt(index);
     emit(RemoveFromLove());
   }
 
+  // custom snack bar
+  void customSnackBar(BuildContext context, String message, Color color) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: Duration(seconds: 2),
+        content: Text(message),
+        backgroundColor: color,
+      ),
+    );
+  }
 }

@@ -1,3 +1,5 @@
+import 'package:e_commerce/Splash/screens/pageView.dart';
+import 'package:e_commerce/Splash/screens/splash.dart';
 import 'package:e_commerce/auth/screens/login.dart';
 import 'package:e_commerce/auth/screens/signUp.dart';
 import 'package:e_commerce/home/cubit/cubit.dart';
@@ -25,8 +27,10 @@ class MyApp extends StatelessWidget {
             'login': (context) => const Login(),
             'register': (context) => const SignUp(),
             'display': (context) => const Display(),
+            'page': (context) => const Boarding(),
+            'splash': (context) => const Splash(),
           },
-          initialRoute: 'display',
+          initialRoute: 'splash',
         ),
       ),
     );

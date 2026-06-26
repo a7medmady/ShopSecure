@@ -20,8 +20,18 @@ class Love extends StatelessWidget {
             child: IconButton(
               onPressed: () {
                 if (cubit.listOfLove.contains(product)) {
+                  cubit.customSnackBar(
+                    context,
+                    'Removed from love',
+                    Colors.red,
+                  );
                   cubit.removeFromLove(product);
                 } else {
+                  cubit.customSnackBar(
+                    context,
+                    'Inserted to love',
+                    Colors.green,
+                  );
                   cubit.insertToLove(product);
                 }
               },

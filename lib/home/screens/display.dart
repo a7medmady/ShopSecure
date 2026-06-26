@@ -66,10 +66,10 @@ class _DisplayState extends State<Display> {
                   icon: Icon(Icons.shopping_cart, size: 30),
                   label: 'Cart',
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person, size: 30),
-                  label: 'Profile',
-                ),
+                // BottomNavigationBarItem(
+                //   icon: Icon(Icons.person, size: 30),
+                //   label: 'Profile',
+                // ),
               ],
 
               backgroundColor: Colors.transparent,

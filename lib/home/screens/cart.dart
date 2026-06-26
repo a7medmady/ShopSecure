@@ -50,7 +50,14 @@ class Cart extends StatelessWidget {
                                 return ProductCart(
                                   product: cubit.listOfCart[index],
                                   onDelete: () {
-                                    cubit.removeFromCart(index);
+                                    if (cubit.listOfCart.isNotEmpty) {
+                                      cubit.customSnackBar(
+                                        context,
+                                        '${cubit.listOfCart[index].title} removed from cart',
+                                        Colors.red,
+                                      );
+                                      cubit.removeFromCart(index);
+                                    }
                                   },
                                 );
                               },
