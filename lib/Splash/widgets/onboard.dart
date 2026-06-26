@@ -17,7 +17,7 @@ class OnBoarding extends StatelessWidget {
     return SafeArea(
       child: Container(
         alignment: Alignment.center,
-        height: double.infinity,
+        height: 300,
         width: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(

@@ -91,7 +91,7 @@ class _BoardingState extends State<Boarding> {
             child: InkWell(
               onTap: () {
                 if (currentIndex == 2) {
-                  Navigator.pushNamed(context, 'display');
+                  Navigator.pushNamed(context, 'login');
                 } else {
                   pageController.nextPage(
                     duration: Duration(milliseconds: 300),

@@ -28,57 +28,60 @@ class _DisplayState extends State<Display> {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
         return SafeArea(
-          child: Scaffold(
-            backgroundColor: const Color.fromARGB(255, 208, 206, 206),
-            drawer: Drawer(),
-            appBar: AppBar(
-              title: Text(
-                'ShopSecure',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.backgroundColor,
-                ),
-              ),
-              centerTitle: true,
-              backgroundColor: Colors.white,
-              actions: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Icon(
-                    Icons.shopping_cart_outlined,
-                    size: 30,
+          child: PopScope(
+            canPop: false,
+            child: Scaffold(
+              backgroundColor: const Color.fromARGB(255, 208, 206, 206),
+              drawer: Drawer(),
+              appBar: AppBar(
+                title: Text(
+                  'ShopSecure',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
                     color: AppColors.backgroundColor,
                   ),
                 ),
-              ],
-            ),
+                centerTitle: true,
+                backgroundColor: Colors.white,
+                actions: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Icon(
+                      Icons.shopping_cart_outlined,
+                      size: 30,
+                      color: AppColors.backgroundColor,
+                    ),
+                  ),
+                ],
+              ),
 
-            body: cubit.screens[cubit.currentIndex],
+              body: cubit.screens[cubit.currentIndex],
 
-            bottomNavigationBar: BottomNavigationBar(
-              items: [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home, size: 30),
-                  label: 'Home',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.shopping_cart, size: 30),
-                  label: 'Cart',
-                ),
-                // BottomNavigationBarItem(
-                //   icon: Icon(Icons.person, size: 30),
-                //   label: 'Profile',
-                // ),
-              ],
+              bottomNavigationBar: BottomNavigationBar(
+                items: [
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.home, size: 30),
+                    label: 'Home',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.shopping_cart, size: 30),
+                    label: 'Cart',
+                  ),
+                  // BottomNavigationBarItem(
+                  //   icon: Icon(Icons.person, size: 30),
+                  //   label: 'Profile',
+                  // ),
+                ],
 
-              backgroundColor: Colors.transparent,
-              currentIndex: cubit.currentIndex,
-              onTap: (index) => cubit.changeScreen(index),
-              selectedItemColor: AppColors.backgroundColor,
-              unselectedItemColor: AppColors.primaryColor,
-              showSelectedLabels: true,
-              showUnselectedLabels: true,
+                backgroundColor: Colors.transparent,
+                currentIndex: cubit.currentIndex,
+                onTap: (index) => cubit.changeScreen(index),
+                selectedItemColor: AppColors.backgroundColor,
+                unselectedItemColor: AppColors.primaryColor,
+                showSelectedLabels: true,
+                showUnselectedLabels: true,
+              ),
             ),
           ),
         );

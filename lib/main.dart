@@ -1,5 +1,6 @@
 import 'package:e_commerce/Splash/screens/pageView.dart';
 import 'package:e_commerce/Splash/screens/splash.dart';
+import 'package:e_commerce/auth/cubit/cubit.dart';
 import 'package:e_commerce/auth/screens/login.dart';
 import 'package:e_commerce/auth/screens/signUp.dart';
 import 'package:e_commerce/home/cubit/cubit.dart';
@@ -19,8 +20,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(390, 844),
-      child: BlocProvider(
-        create: (context) => HomeCubit(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => AuthCubit()),
+          BlocProvider(create: (context) => HomeCubit()),
+        ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           routes: {

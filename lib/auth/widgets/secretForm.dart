@@ -7,12 +7,14 @@ class SecretForm extends StatefulWidget {
   final String subtitle;
   final TextEditingController controller;
   final TextEditingController? parentController;
+  final TextInputAction textInputAction;
   const SecretForm({
     super.key,
     required this.title,
     required this.subtitle,
     required this.controller,
-    required this.parentController,
+    required this.parentController, 
+    required this.textInputAction,
   });
 
   @override
@@ -38,9 +40,7 @@ class _SecretFormState extends State<SecretForm> {
           ),
           const SizedBox(height: 10),
           TextFormField(
-            textInputAction: widget.parentController == null
-                ? TextInputAction.done
-                : TextInputAction.next,
+            textInputAction: widget.textInputAction,
             obscureText: !obscureText,
             controller: widget.controller,
             decoration: InputDecoration(

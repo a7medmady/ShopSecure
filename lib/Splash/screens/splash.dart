@@ -14,7 +14,7 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 6), () {
+    Future.delayed(Duration(seconds: 10), () {
       Navigator.pushNamed(context, 'page');
     });
   }
