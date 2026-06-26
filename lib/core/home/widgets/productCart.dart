@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_commerce/constants/appColor.dart';
-import 'package:e_commerce/home/model/productModel.dart';
-import 'package:e_commerce/home/widgets/quantity.dart';
+import 'package:e_commerce/core/constants/appColor.dart';
+import 'package:e_commerce/core/home/model/productModel.dart';
+import 'package:e_commerce/core/home/widgets/quantity.dart';
 import 'package:flutter/material.dart';
 
 class ProductCart extends StatefulWidget {

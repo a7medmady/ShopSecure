@@ -1,34 +1,35 @@
-import 'package:e_commerce/auth/cubit/cubit.dart';
-import 'package:e_commerce/auth/cubit/state.dart';
-import 'package:e_commerce/auth/widgets/button.dart';
-import 'package:e_commerce/auth/widgets/customForm.dart';
-import 'package:e_commerce/auth/widgets/secretForm.dart';
-import 'package:e_commerce/constants/appColor.dart';
+import 'package:e_commerce/core/auth/cubit/cubit.dart';
+import 'package:e_commerce/core/auth/cubit/state.dart';
+import 'package:e_commerce/core/auth/widgets/button.dart';
+import 'package:e_commerce/core/auth/widgets/customForm.dart';
+import 'package:e_commerce/core/auth/widgets/secretForm.dart';
+import 'package:e_commerce/core/constants/appColor.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-String routename = 'login';
+String routename = 'register';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _LoginState extends State<Login> {
+class _SignUpState extends State<SignUp> {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state is SignInSuccess) {
+        if (state is SignUpSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                'Login successfully',
+                'Account created successfully',
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -40,9 +41,9 @@ class _LoginState extends State<Login> {
             ),
           );
           AuthCubit.get(context).restore();
-          Navigator.pushNamed(context, 'display');
-          AuthCubit.get(context).clearLogin();
-        } else if (state is SignInError) {
+          Navigator.pushNamed(context, 'login');
+          AuthCubit.get(context).clearSignUp();
+        } else if (state is SignUpError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
@@ -67,23 +68,22 @@ class _LoginState extends State<Login> {
           child: Scaffold(
             resizeToAvoidBottomInset: true,
             body: Padding(
-              padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
+              padding: EdgeInsets.only(top: 40, left: 20, right: 20),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 30.h),
                     Text(
-                      'Login to your account',
+                      'Create an account',
                       style: TextStyle(
                         fontSize: AppFonts.large,
                         fontWeight: FontWeight.bold,
                         color: AppColors.primaryColor,
                       ),
                     ),
-                    SizedBox(height: 20.h),
+                    SizedBox(height: 5.h),
                     Text(
-                      'It’s great to see you again.',
+                      'Let’s create your account.',
                       style: TextStyle(
                         fontSize: AppFonts.medium,
                         fontWeight: FontWeight.bold,
@@ -91,40 +91,62 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     CustomForm(
-                      title: 'Username',
-                      subtitle: 'Enter your User name',
-                      controller: cubit.email,
+                      title: 'Full Name',
+                      subtitle: 'Enter your full name',
+                      controller: cubit.fullName,
                     ),
+                    CustomForm(
+                      title: 'User Name',
+                      subtitle: 'Enter your full name',
+                      controller: cubit.userName,
+                    ),
+                    CustomForm(
+                      title: 'Phone',
+                      subtitle: 'Enter your phone number',
+                      controller: cubit.phone,
+                    ),
+
                     SecretForm(
                       title: 'Password',
                       subtitle: 'Enter your password',
-                      controller: cubit.password,
+                      controller: cubit.pass,
                       parentController: null,
+                      textInputAction: TextInputAction.next,
+                    ),
+
+                    SecretForm(
+                      title: 'Confirm Password',
+                      subtitle: 'Enter your confirm password',
+                      controller: cubit.passUp,
+                      parentController: cubit.pass,
                       textInputAction: TextInputAction.done,
                     ),
 
-                    SizedBox(height: 50.h),
+                    SizedBox(height: 30.h),
 
                     Center(
-                      child: state is SignInLoading
-                          ? CircularProgressIndicator()
+                      child: state is SignUpLoading
+                          ? CircularProgressIndicator(
+                              color: AppColors.primaryColor,
+                            )
                           : Button(
-                              title: 'Sign In',
+                              title: 'Create Account',
                               onTap: () {
                                 if (formkey.currentState!.validate()) {
-                                  cubit.signIn();
+                                  cubit.signUp();
                                 }
                               },
                             ),
                     ),
-                    SizedBox(height: 280.h),
+
+                    SizedBox(height: 40.h),
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text.rich(
                           TextSpan(
-                            text: 'Don’t have an account? ',
+                            text: 'Already have an account? ',
                             style: TextStyle(
                               fontSize: AppFonts.medium,
                               fontWeight: FontWeight.normal,
@@ -132,7 +154,7 @@ class _LoginState extends State<Login> {
                             ),
                             children: [
                               TextSpan(
-                                text: 'Join',
+                                text: "Log In",
                                 style: TextStyle(
                                   fontSize: AppFonts.medium,
                                   fontWeight: FontWeight.bold,
@@ -140,8 +162,9 @@ class _LoginState extends State<Login> {
                                   decoration: TextDecoration.underline,
                                 ),
                                 recognizer: TapGestureRecognizer()
-                                  ..onTap = () =>
-                                      Navigator.pushNamed(context, 'register'),
+                                  ..onTap = () {
+                                    Navigator.pushNamed(context, 'login');
+                                  },
                               ),
                             ],
                           ),

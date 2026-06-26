@@ -1,4 +1,4 @@
-import 'package:e_commerce/constants/appColor.dart';
+import 'package:e_commerce/core/constants/appColor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

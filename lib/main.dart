@@ -1,10 +1,10 @@
-import 'package:e_commerce/Splash/screens/pageView.dart';
-import 'package:e_commerce/Splash/screens/splash.dart';
-import 'package:e_commerce/auth/cubit/cubit.dart';
-import 'package:e_commerce/auth/screens/login.dart';
-import 'package:e_commerce/auth/screens/signUp.dart';
-import 'package:e_commerce/home/cubit/cubit.dart';
-import 'package:e_commerce/home/screens/display.dart';
+import 'package:e_commerce/core/Splash/screens/pageView.dart';
+import 'package:e_commerce/core/Splash/screens/splash.dart';
+import 'package:e_commerce/core/auth/cubit/cubit.dart';
+import 'package:e_commerce/core/auth/screens/login.dart';
+import 'package:e_commerce/core/auth/screens/signUp.dart';
+import 'package:e_commerce/core/home/cubit/cubit.dart';
+import 'package:e_commerce/core/home/screens/display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

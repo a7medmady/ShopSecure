@@ -1,4 +1,4 @@
-import 'package:e_commerce/Splash/widgets/onboard.dart';
+import 'package:e_commerce/core/Splash/widgets/onboard.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 

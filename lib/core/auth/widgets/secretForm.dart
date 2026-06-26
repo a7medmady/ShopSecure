@@ -1,23 +1,28 @@
-import 'package:e_commerce/constants/appColor.dart';
+import 'package:e_commerce/core/constants/appColor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CustomForm extends StatefulWidget {
+class SecretForm extends StatefulWidget {
   final String title;
   final String subtitle;
   final TextEditingController controller;
-  const CustomForm({
+  final TextEditingController? parentController;
+  final TextInputAction textInputAction;
+  const SecretForm({
     super.key,
     required this.title,
     required this.subtitle,
     required this.controller,
+    required this.parentController, 
+    required this.textInputAction,
   });
 
   @override
-  State<CustomForm> createState() => _CustomFormState();
+  State<SecretForm> createState() => _SecretFormState();
 }
 
-class _CustomFormState extends State<CustomForm> {
+class _SecretFormState extends State<SecretForm> {
+  bool obscureText = false;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -35,13 +40,10 @@ class _CustomFormState extends State<CustomForm> {
           ),
           const SizedBox(height: 10),
           TextFormField(
+            textInputAction: widget.textInputAction,
+            obscureText: !obscureText,
             controller: widget.controller,
-            textInputAction: TextInputAction.next,
             decoration: InputDecoration(
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 15,
-                vertical: 15,
-              ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.r),
                 borderSide: BorderSide(
@@ -64,6 +66,20 @@ class _CustomFormState extends State<CustomForm> {
                 borderRadius: BorderRadius.circular(10.r),
                 borderSide: BorderSide(color: Colors.red, width: 1),
               ),
+
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    obscureText = !obscureText;
+                  });
+                },
+                icon: obscureText
+                    ? Icon(Icons.visibility, color: AppColors.secondaryColor)
+                    : Icon(
+                        Icons.visibility_off,
+                        color: AppColors.secondaryColor,
+                      ),
+              ),
               labelText: widget.subtitle,
               labelStyle: TextStyle(
                 fontSize: AppFonts.small,
@@ -72,8 +88,13 @@ class _CustomFormState extends State<CustomForm> {
               ),
             ),
             validator: (value) {
+              if (widget.parentController != null) {
+                if (value != widget.parentController!.text) {
+                  return 'Passwords do not match';
+                }
+              }
               if (value == null || value.isEmpty) {
-                return 'Please enter your ${widget.title}';
+                return 'Please enter your ${widget.title.toLowerCase()}';
               }
               return null;
             },

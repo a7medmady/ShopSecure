@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_commerce/home/model/productModel.dart';
-import 'package:e_commerce/home/screens/productCard.dart';
-import 'package:e_commerce/home/widgets/love.dart';
+import 'package:e_commerce/core/home/model/productModel.dart';
+import 'package:e_commerce/core/home/screens/productCard.dart';
+import 'package:e_commerce/core/home/widgets/love.dart';
 import 'package:flutter/material.dart';
 
 class Product extends StatelessWidget {

@@ -1,6 +1,6 @@
-import 'package:e_commerce/home/cubit/cubit.dart';
-import 'package:e_commerce/home/cubit/state.dart';
-import 'package:e_commerce/home/model/productModel.dart';
+import 'package:e_commerce/core/home/cubit/cubit.dart';
+import 'package:e_commerce/core/home/cubit/state.dart';
+import 'package:e_commerce/core/home/model/productModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

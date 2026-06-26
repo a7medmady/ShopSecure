@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_commerce/constants/appColor.dart';
-import 'package:e_commerce/home/cubit/cubit.dart';
-import 'package:e_commerce/home/cubit/state.dart';
-import 'package:e_commerce/home/model/productModel.dart';
-import 'package:e_commerce/home/widgets/addCart.dart';
-import 'package:e_commerce/home/widgets/love.dart';
-import 'package:e_commerce/home/widgets/userReview.dart';
+import 'package:e_commerce/core/constants/appColor.dart';
+import 'package:e_commerce/core/home/cubit/cubit.dart';
+import 'package:e_commerce/core/home/cubit/state.dart';
+import 'package:e_commerce/core/home/model/productModel.dart';
+import 'package:e_commerce/core/home/widgets/addCart.dart';
+import 'package:e_commerce/core/home/widgets/love.dart';
+import 'package:e_commerce/core/home/widgets/userReview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

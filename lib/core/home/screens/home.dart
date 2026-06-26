@@ -1,8 +1,8 @@
-import 'package:e_commerce/home/cubit/cubit.dart';
-import 'package:e_commerce/home/cubit/state.dart';
-import 'package:e_commerce/home/widgets/product.dart';
-import 'package:e_commerce/home/widgets/scrollHorizontal.dart';
-import 'package:e_commerce/home/widgets/search.dart';
+import 'package:e_commerce/core/home/cubit/cubit.dart';
+import 'package:e_commerce/core/home/cubit/state.dart';
+import 'package:e_commerce/core/home/widgets/product.dart';
+import 'package:e_commerce/core/home/widgets/scrollHorizontal.dart';
+import 'package:e_commerce/core/home/widgets/search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

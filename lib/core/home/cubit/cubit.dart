@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:e_commerce/home/cubit/state.dart';
-import 'package:e_commerce/home/model/categoryModel.dart';
-import 'package:e_commerce/home/model/productModel.dart';
-import 'package:e_commerce/home/screens/cart.dart';
-import 'package:e_commerce/home/screens/home.dart';
+import 'package:e_commerce/core/home/cubit/state.dart';
+import 'package:e_commerce/core/home/model/categoryModel.dart';
+import 'package:e_commerce/core/home/model/productModel.dart';
+import 'package:e_commerce/core/home/screens/cart.dart';
+import 'package:e_commerce/core/home/screens/home.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
