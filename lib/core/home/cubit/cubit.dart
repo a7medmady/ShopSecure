@@ -23,16 +23,16 @@ class HomeCubit extends Cubit<HomeState> {
   // Dio
   var dio = Dio();
 
-  Future search() async {
-    emit(HomeSearchLoading());
-    try {
-      var response = await dio.get('');
-      emit(HomeSearchSuccess());
-      return response;
-    } catch (e) {
-      emit(HomeSearchError(message: e.toString()));
-    }
-  }
+  // Future search() async {
+  //   emit(HomeSearchLoading());
+  //   try {
+  //     var response = await dio.get('');
+  //     emit(HomeSearchSuccess());
+  //     return response;
+  //   } catch (e) {
+  //     emit(HomeSearchError(message: e.toString()));
+  //   }
+  // }
 
   // get products
   List<ProductModel> listOfProducts = [];
