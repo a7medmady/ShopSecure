@@ -3,13 +3,16 @@ import 'package:e_commerce/core/Splash/screens/splash.dart';
 import 'package:e_commerce/core/auth/cubit/cubit.dart';
 import 'package:e_commerce/core/auth/screens/login.dart';
 import 'package:e_commerce/core/auth/screens/signUp.dart';
+import 'package:e_commerce/core/database/cachehelper.dart';
 import 'package:e_commerce/core/home/cubit/cubit.dart';
 import 'package:e_commerce/core/home/screens/display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Cachehelper.initial();
   runApp(const MyApp());
 }
 

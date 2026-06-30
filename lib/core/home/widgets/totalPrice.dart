@@ -49,7 +49,7 @@ class TotalPrice extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Shipping fee',
+                  'Discount',
                   style: TextStyle(
                     fontSize: 18,
                     color: Colors.black,
@@ -57,7 +57,7 @@ class TotalPrice extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '% 15',
+                  '% 10',
                   style: TextStyle(
                     fontSize: 18,
                     color: const Color.fromARGB(255, 203, 104, 5),

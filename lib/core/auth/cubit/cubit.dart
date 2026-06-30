@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:e_commerce/core/auth/cubit/state.dart';
+import 'package:e_commerce/core/auth/model/userModel.dart';
+import 'package:e_commerce/core/database/cachehelper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,10 +18,10 @@ class AuthCubit extends Cubit<AuthState> {
   // restore initial state
   void restore() => emit(AuthInitial());
 
-//---------------------------------------------------------
+  //---------------------------------------------------------
 
   // close sign up
-    void clearSignUp() {
+  void clearSignUp() {
     fullName.clear();
     userName.clear();
     phone.clear();
@@ -35,18 +39,41 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthInitial());
   }
 
-// ----------------------------------------------------------------------
- 
+  // ----------------------------------------------------------------------
+
+  // save information about user
+
+  void saveUserInfo(UserModel model) async {
+    await Cachehelper.saveData(key: 'username', value: model.username);
+    await Cachehelper.saveData(key: 'fullname', value: model.fname + ' ' + model.lname);
+    await Cachehelper.saveData(key: 'id', value: model.uId);
+    await Cachehelper.saveData(key: 'email', value: model.email);
+  }
+
+  // ----------------------------------------------------------------
+
   // sign in
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   void signIn() async {
     try {
       emit(SignInLoading());
-      await dio.post(
+      var response = await dio.post(
         'https://dummyjson.com/auth/login',
         data: {'username': email.text, 'password': password.text},
       );
+      UserModel user = UserModel.fromJson(response.data);
+      saveUserInfo(user);
+      var cartResponse = await dio.get(
+      'https://dummyjson.com/carts/user/${user.uId}',
+    );
+
+    if (cartResponse.data['carts'].isNotEmpty) {
+      await Cachehelper.saveData(
+        key: 'cartId',
+        value: cartResponse.data['carts'][0]['id'],
+      );
+    }
       emit(SignInSuccess());
     } on DioException catch (e) {
       emit(
@@ -60,7 +87,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-// -----------------------------------------------------------------
+  // -----------------------------------------------------------------
 
   // sign up
   TextEditingController fullName = TextEditingController();

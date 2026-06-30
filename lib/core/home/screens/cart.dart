@@ -11,15 +11,17 @@ class Cart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var cubit = HomeCubit.get(context);
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
-        var cubit = HomeCubit.get(context);
         return Scaffold(
           body: Stack(
             children: [
               Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: cubit.listOfCart.isEmpty
+                child: state is CartLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : cubit.listOfCartForUser.isEmpty
                     ? const Center(child: Text('Your Cart is Empty'))
                     : SingleChildScrollView(
                         child: Column(
@@ -48,15 +50,23 @@ class Cart extends StatelessWidget {
                               physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) {
                                 return ProductCart(
-                                  product: cubit.listOfCart[index],
+                                  product: cubit.listOfCartForUser[index],
                                   onDelete: () {
-                                    if (cubit.listOfCart.isNotEmpty) {
+                                    if (cubit.listOfCartForUser.isNotEmpty) {
                                       cubit.customSnackBar(
                                         context,
-                                        '${cubit.listOfCart[index].title} removed from cart',
+                                        '${cubit.listOfCartForUser[index].title} removed from cart',
                                         Colors.red,
                                       );
-                                      cubit.removeFromCart(index);
+                                      // دا الصح
+                                      // cubit.removeFromCart(
+                                      //   index,
+                                      //   Cachehelper.getData(key: 'cartId'),
+                                      //   );
+
+                                      cubit.removeFromCart(
+                                        cubit.listOfCartForUser[index],
+                                      );
                                     }
                                   },
                                 );
@@ -69,7 +79,7 @@ class Cart extends StatelessWidget {
                                   endIndent: 20,
                                 );
                               },
-                              itemCount: cubit.listOfCart.length,
+                              itemCount: cubit.listOfCartForUser.length,
                             ),
 
                             const SizedBox(height: 200),

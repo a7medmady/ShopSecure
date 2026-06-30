@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/core/constants/appColor.dart';
+import 'package:e_commerce/core/database/cachehelper.dart';
 import 'package:e_commerce/core/home/cubit/cubit.dart';
 import 'package:e_commerce/core/home/cubit/state.dart';
 import 'package:e_commerce/core/home/model/productModel.dart';
@@ -182,7 +183,7 @@ class _ProductCardState extends State<ProductCard> {
 
                     AddCartButton(
                       onTap: () {
-                        if (!cubit.listOfCart.contains(widget.product)) {
+                        if (!cubit.listOfCartForUser.contains(widget.product)) {
                           cubit.customSnackBar(
                             context,
                             '${widget.product.title} added to Cart Successfully',
@@ -195,6 +196,13 @@ class _ProductCardState extends State<ProductCard> {
                             Colors.red,
                           );
                         }
+                        // دا الصح
+                        // cubit.addCart(
+                        //   widget.product,
+                        //   Cachehelper.getData(key: 'cartId'),
+                        //   widget.product.quantity,
+                        //   );
+
                         cubit.addCart(widget.product);
                       },
                     ),

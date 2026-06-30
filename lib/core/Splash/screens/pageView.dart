@@ -1,4 +1,5 @@
 import 'package:e_commerce/core/Splash/widgets/onboard.dart';
+import 'package:e_commerce/core/database/cachehelper.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -91,6 +92,7 @@ class _BoardingState extends State<Boarding> {
             child: InkWell(
               onTap: () {
                 if (currentIndex == 2) {
+                  Cachehelper.saveData(key: 'isNotFirstUsingApp', value: true);
                   Navigator.pushNamed(context, 'login');
                 } else {
                   pageController.nextPage(

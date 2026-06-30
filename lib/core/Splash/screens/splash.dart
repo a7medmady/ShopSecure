@@ -1,3 +1,4 @@
+import 'package:e_commerce/core/database/cachehelper.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -15,7 +16,15 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 10), () {
-      Navigator.pushNamed(context, 'page');
+      if (Cachehelper.contain(key: 'isNotFirstUsingApp')) {
+        if (!Cachehelper.contain(key: 'username')) {
+          Navigator.pushNamed(context, 'login');
+        } else {
+          Navigator.pushNamed(context, 'display');
+        }
+      } else {
+        Navigator.pushNamed(context, 'page');
+      }
     });
   }
 

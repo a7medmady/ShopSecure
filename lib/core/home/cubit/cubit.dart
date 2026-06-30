@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:e_commerce/core/database/cachehelper.dart';
 import 'package:e_commerce/core/home/cubit/state.dart';
 import 'package:e_commerce/core/home/model/categoryModel.dart';
 import 'package:e_commerce/core/home/model/productModel.dart';
@@ -57,6 +58,8 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
+  // --------------------------------------------------------------------------------
+
   // get categories
   List<CategoryModel> listOfCategories = [];
   String selectedCategory = 'All';
@@ -83,12 +86,14 @@ class HomeCubit extends Cubit<HomeState> {
     emit(CategoryChanged());
   }
 
+  // ------------------------------------------------------------------------
+
   // change quantity
   // 1- Increase
   void increaseQuantity(ProductModel product, BuildContext context) {
-    int index = listOfCart.indexOf(product);
-    if (listOfCart[index].quantity < 10) {
-      listOfCart[index].quantity += 1;
+    int index = listOfCartForUser.indexOf(product);
+    if (listOfCartForUser[index].quantity < 10) {
+      listOfCartForUser[index].quantity += 1;
     } else {
       customSnackBar(
         context,
@@ -101,9 +106,9 @@ class HomeCubit extends Cubit<HomeState> {
 
   // 2- Decrease
   void decreaseQuantity(ProductModel product, BuildContext context) {
-    int index = listOfCart.indexOf(product);
-    if (listOfCart[index].quantity > 1) {
-      listOfCart[index].quantity -= 1;
+    int index = listOfCartForUser.indexOf(product);
+    if (listOfCartForUser[index].quantity > 1) {
+      listOfCartForUser[index].quantity -= 1;
     } else {
       customSnackBar(
         context,
@@ -114,25 +119,76 @@ class HomeCubit extends Cubit<HomeState> {
     emit(CategoryChanged());
   }
 
-  // Add Cart
-  List<ProductModel> listOfCart = [];
-  void addCart(ProductModel product) {
-    if (!listOfCart.contains(product)) {
-      listOfCart.add(product);
+  // -----------------------------------------------------------------------
+
+  // cart
+  // get cart for user
+  List<ProductModel> listOfCartForUser = [];
+  Future cartForUser(int id) async {
+    try {
+      emit(CartLoading());
+      listOfCartForUser.clear();
+      var response = await dio.get('https://dummyjson.com/carts/user/$id');
+      final cartId = response.data['carts'][0]['id'];
+      await Cachehelper.saveData(key: 'cartId', value: cartId);
+      for (var item in response.data['carts'][0]['products']) {
+        listOfCartForUser.add(ProductModel.fromJson(item));
+      }
+      emit(CartSuccess());
+    } on DioException catch (e) {
+      emit(CartError(message: '${e.response!.data['message']}'));
+    } catch (e) {
+      emit(CartError(message: e.toString()));
     }
-    emit(AddCart());
+  }
+
+  // Add Cart
+  // دا الصح بس ال api مش بيضيف ع السيرفر
+  // void addCart(ProductModel product, int cartId, int quantity) async {
+  //   final exists = listOfCartForUser.any((e) => e.id == product.id);
+
+  //   if (!exists) {
+  //     await dio.post(
+  //       'https://dummyjson.com/carts/$cartId/add',
+  //       data: {
+  //         'products': [
+  //           {'id': product.id, 'quantity': quantity},
+  //         ],
+  //       },
+  //     );
+  //     cartForUser(cartId);
+  //     emit(UpdateCart());
+  //   }
+  // }
+
+  void addCart(ProductModel product) {
+    if (!listOfCartForUser.contains(product)) {
+      listOfCartForUser.add(product);
+      emit(UpdateCart());
+    }
   }
 
   // Remove from Cart
-  void removeFromCart(int index) {
-    listOfCart.removeAt(index);
-    emit(RemoveFromCart());
+  // دا الصح بس ال api مش بيحذف ع السيرفر
+  // void removeFromCart(int index, int id) async {
+  //   await dio.delete('https://dummyjson.com/carts/$id/products/$index');
+  //   cartForUser(id);
+  //   emit(UpdateCart());
+  // }
+
+  void removeFromCart(ProductModel product) {
+    int index = listOfCartForUser.indexOf(product);
+    listOfCartForUser.removeAt(index);
+    emit(UpdateCart());
   }
+
+
+//---------------------------------------------------------------------
 
   // calculate subtotal
   double calculateSubTotal() {
     double subTotal = 0;
-    for (var item in listOfCart) {
+    for (var item in listOfCartForUser) {
       subTotal += item.price * item.quantity;
     }
     return subTotal;
@@ -141,9 +197,11 @@ class HomeCubit extends Cubit<HomeState> {
   // calculate total
   double calculateTotal() {
     double total = 0;
-    total = calculateSubTotal() * 1.15;
+    total = calculateSubTotal() * 0.9;
     return total;
   }
+
+  // --------------------------------------------------
 
   // insert to love
   List<ProductModel> listOfLove = [];
