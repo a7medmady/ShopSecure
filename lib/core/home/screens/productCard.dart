@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/core/constants/appColor.dart';
-import 'package:e_commerce/core/database/cachehelper.dart';
 import 'package:e_commerce/core/home/cubit/cubit.dart';
 import 'package:e_commerce/core/home/cubit/state.dart';
 import 'package:e_commerce/core/home/model/productModel.dart';
