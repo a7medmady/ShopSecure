@@ -1,6 +1,7 @@
 import 'package:e_commerce/core/constants/appColor.dart';
 import 'package:e_commerce/core/home/cubit/cubit.dart';
 import 'package:e_commerce/core/home/cubit/state.dart';
+import 'package:e_commerce/core/home/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,7 +33,9 @@ class _DisplayState extends State<Display> {
             canPop: false,
             child: Scaffold(
               backgroundColor: const Color.fromARGB(255, 208, 206, 206),
-              drawer: Drawer(),
+              drawer: Drawer(
+                child: MyDrawer(),
+              ),
               appBar: AppBar(
                 title: Text(
                   'ShopSecure',

@@ -43,7 +43,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   void saveUserInfo(UserModel model) async {
     await Cachehelper.saveData(key: 'username', value: model.username);
-    await Cachehelper.saveData(key: 'fullname', value: model.fname + ' ' + model.lname);
+    await Cachehelper.saveData(key: 'fullname', value: '${model.fname} ${model.lname}');
     await Cachehelper.saveData(key: 'id', value: model.uId);
     await Cachehelper.saveData(key: 'email', value: model.email);
   }

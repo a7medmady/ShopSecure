@@ -18,6 +18,9 @@ class HomeCubit extends Cubit<HomeState> {
   int currentIndex = 0;
   void changeScreen(int index) {
     currentIndex = index;
+    if (index == 1) {
+      cartForUser(Cachehelper.getData(key: 'id'));
+    }
     emit(ScreenChanged());
   }
 
@@ -123,16 +126,18 @@ class HomeCubit extends Cubit<HomeState> {
 
   // cart
   // get cart for user
-  List<ProductModel> listOfCartForUser = [];
+  List<ProductModel> get listOfCartForUser => [...apiCart, ...localCart];
+  List<ProductModel> apiCart = [];
+  List<ProductModel> localCart = [];
   Future cartForUser(int id) async {
     try {
       emit(CartLoading());
-      listOfCartForUser.clear();
+      apiCart.clear();
       var response = await dio.get('https://dummyjson.com/carts/user/$id');
       final cartId = response.data['carts'][0]['id'];
       await Cachehelper.saveData(key: 'cartId', value: cartId);
       for (var item in response.data['carts'][0]['products']) {
-        listOfCartForUser.add(ProductModel.fromJson(item));
+        apiCart.add(ProductModel.fromJson(item));
       }
       emit(CartSuccess());
     } on DioException catch (e) {
@@ -162,8 +167,11 @@ class HomeCubit extends Cubit<HomeState> {
   // }
 
   void addCart(ProductModel product) {
-    if (!listOfCartForUser.contains(product)) {
-      listOfCartForUser.add(product);
+    final apiExists = apiCart.any((e) => e.id == product.id);
+    final localExists = localCart.any((e) => e.id == product.id);
+
+    if (!apiExists && !localExists) {
+      localCart.add(product);
       emit(UpdateCart());
     }
   }
@@ -177,13 +185,16 @@ class HomeCubit extends Cubit<HomeState> {
   // }
 
   void removeFromCart(ProductModel product) {
-    int index = listOfCartForUser.indexOf(product);
-    listOfCartForUser.removeAt(index);
+    if (localCart.any((e) => e.id == product.id)) {
+      localCart.removeWhere((e) => e.id == product.id);
+    } else if (apiCart.any((e) => e.id == product.id)) {
+      apiCart.removeWhere((e) => e.id == product.id);
+    }
+
     emit(UpdateCart());
   }
 
-
-//---------------------------------------------------------------------
+  //---------------------------------------------------------------------
 
   // calculate subtotal
   double calculateSubTotal() {

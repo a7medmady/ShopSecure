@@ -64,91 +64,94 @@ class _LoginState extends State<Login> {
         var cubit = AuthCubit.get(context);
         return Form(
           key: formkey,
-          child: Scaffold(
-            resizeToAvoidBottomInset: true,
-            body: Padding(
-              padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 30.h),
-                    Text(
-                      'Login to your account',
-                      style: TextStyle(
-                        fontSize: AppFonts.large,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primaryColor,
-                      ),
-                    ),
-                    SizedBox(height: 20.h),
-                    Text(
-                      'It’s great to see you again.',
-                      style: TextStyle(
-                        fontSize: AppFonts.medium,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.secondaryColor,
-                      ),
-                    ),
-                    CustomForm(
-                      title: 'Username',
-                      subtitle: 'Enter your User name',
-                      controller: cubit.email,
-                    ),
-                    SecretForm(
-                      title: 'Password',
-                      subtitle: 'Enter your password',
-                      controller: cubit.password,
-                      parentController: null,
-                      textInputAction: TextInputAction.done,
-                    ),
-
-                    SizedBox(height: 50.h),
-
-                    Center(
-                      child: state is SignInLoading
-                          ? CircularProgressIndicator()
-                          : Button(
-                              title: 'Sign In',
-                              onTap: () {
-                                if (formkey.currentState!.validate()) {
-                                  cubit.signIn();
-                                }
-                              },
-                            ),
-                    ),
-                    SizedBox(height: 280.h),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text.rich(
-                          TextSpan(
-                            text: 'Don’t have an account? ',
-                            style: TextStyle(
-                              fontSize: AppFonts.medium,
-                              fontWeight: FontWeight.normal,
-                              color: AppColors.secondaryColor,
-                            ),
-                            children: [
-                              TextSpan(
-                                text: 'Join',
-                                style: TextStyle(
-                                  fontSize: AppFonts.medium,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.primaryColor,
-                                  decoration: TextDecoration.underline,
-                                ),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () =>
-                                      Navigator.pushNamed(context, 'register'),
-                              ),
-                            ],
-                          ),
+          child: PopScope(
+            canPop: false,
+            child: Scaffold(
+              resizeToAvoidBottomInset: true,
+              body: Padding(
+                padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 30.h),
+                      Text(
+                        'Login to your account',
+                        style: TextStyle(
+                          fontSize: AppFonts.large,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primaryColor,
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                      SizedBox(height: 20.h),
+                      Text(
+                        'It’s great to see you again.',
+                        style: TextStyle(
+                          fontSize: AppFonts.medium,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.secondaryColor,
+                        ),
+                      ),
+                      CustomForm(
+                        title: 'Username',
+                        subtitle: 'Enter your User name',
+                        controller: cubit.email,
+                      ),
+                      SecretForm(
+                        title: 'Password',
+                        subtitle: 'Enter your password',
+                        controller: cubit.password,
+                        parentController: null,
+                        textInputAction: TextInputAction.done,
+                      ),
+            
+                      SizedBox(height: 50.h),
+            
+                      Center(
+                        child: state is SignInLoading
+                            ? CircularProgressIndicator()
+                            : Button(
+                                title: 'Sign In',
+                                onTap: () {
+                                  if (formkey.currentState!.validate()) {
+                                    cubit.signIn();
+                                  }
+                                },
+                              ),
+                      ),
+                      SizedBox(height: 280.h),
+            
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text.rich(
+                            TextSpan(
+                              text: 'Don’t have an account? ',
+                              style: TextStyle(
+                                fontSize: AppFonts.medium,
+                                fontWeight: FontWeight.normal,
+                                color: AppColors.secondaryColor,
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: 'Join',
+                                  style: TextStyle(
+                                    fontSize: AppFonts.medium,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.primaryColor,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () =>
+                                        Navigator.pushNamed(context, 'register'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
